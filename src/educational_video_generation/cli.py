@@ -9,12 +9,17 @@ import typer
 from rich.console import Console
 from rich.table import Table
 
+from dotenv import load_dotenv
+
 from .audio.tts import synthesize_narration
 from .config import load_defaults, load_style_tokens
 from .prompting.generator import generate_lesson_spec
 from .render.renderer import export_static_frames, render_final, render_preview
 from .specs.models import LessonSpec
 from .timeline.scheduler import build_timeline
+
+
+load_dotenv()
 
 
 DEFAULT_STYLE_PATH = Path("configs/style.json")
@@ -59,13 +64,27 @@ def gen(
         file_okay=False,
         help="Directory where generated specs are saved.",
     ),
+    prompt_model: str = typer.Option(
+        "gpt-4o-mini",
+        help="OpenAI model used for prompt expansion.",
+    ),
+    dry_run: bool = typer.Option(
+        False,
+        help="Force offline stub generation even when an API key is available.",
+    ),
 ) -> None:
     """Generate a structured lesson specification from a prompt."""
 
     output_dir.mkdir(parents=True, exist_ok=True)
     style_tokens = load_style_tokens(style)
     defaults_payload = load_defaults(defaults)
-    lesson = generate_lesson_spec(prompt, style_tokens, defaults_payload)
+    lesson = generate_lesson_spec(
+        prompt,
+        style_tokens,
+        defaults_payload,
+        model=prompt_model,
+        dry_run=True if dry_run else None,
+    )
     spec_path = output_dir / f"{lesson.lesson_id}.lesson.json"
     spec_path.write_text(lesson.model_dump_json(indent=2), encoding="utf-8")
 
@@ -86,12 +105,26 @@ def preview(
         help="Preview quality hint (low|medium|high).",
     ),
     voice: str = typer.Option("ballad", help="Voice preset to embed in manifests."),
+    speech_model: str = typer.Option(
+        "gpt-4o-mini-tts",
+        help="OpenAI model for speech synthesis.",
+    ),
+    dry_run: bool = typer.Option(
+        False,
+        help="Force local silent audio generation instead of calling OpenAI.",
+    ),
 ) -> None:
     """Produce placeholder narration + preview artifacts."""
 
     lesson = _load_spec(spec)
     timeline = build_timeline(lesson)
-    manifest_path = synthesize_narration(lesson, output_dir, voice=voice)
+    manifest_path = synthesize_narration(
+        lesson,
+        output_dir,
+        voice=voice,
+        model=speech_model,
+        dry_run=True if dry_run else None,
+    )
     preview_dir = render_preview(lesson, timeline, output_dir, quality=quality)
     console.print(f"[green]Preview artifacts at {preview_dir}")
     console.print(f"[green]Narration manifest at {manifest_path}")
@@ -134,4 +167,3 @@ def frames(
 
 def main() -> None:
     app()
-

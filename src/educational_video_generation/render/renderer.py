@@ -60,7 +60,9 @@ def export_static_frames(
     return frames_dir
 
 
-def _format_summary(stage: str, lesson: LessonSpec, timeline: Timeline, extra: dict[str, Any]) -> str:
+def _format_summary(
+    stage: str, lesson: LessonSpec, timeline: Timeline, extra: dict[str, Any]
+) -> str:
     return (
         f"Stage: {stage}\n"
         f"Lesson: {lesson.lesson_id}\n"

@@ -58,11 +58,13 @@ def render() -> None:
         st.subheader("Scenes")
         for scene in lesson.scenes:
             with st.expander(scene.title, expanded=True):
-                st.write({
-                    "scene_id": scene.id,
-                    "summary": scene.summary,
-                    "duration_target": scene.duration_target,
-                })
+                st.write(
+                    {
+                        "scene_id": scene.id,
+                        "summary": scene.summary,
+                        "duration_target": scene.duration_target,
+                    }
+                )
                 st.write("Narration", [chunk.text for chunk in scene.narration])
                 st.write("Events", [event.model_dump() for event in scene.events])
 

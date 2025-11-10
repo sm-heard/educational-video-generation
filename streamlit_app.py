@@ -5,6 +5,8 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
+from dotenv import load_dotenv
+
 
 def _ensure_src_on_path() -> None:
     project_root = Path(__file__).resolve().parent
@@ -14,6 +16,8 @@ def _ensure_src_on_path() -> None:
 
 
 _ensure_src_on_path()
+
+load_dotenv()
 
 from educational_video_generation.ui.app import render
 

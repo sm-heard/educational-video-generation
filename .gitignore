@@ -8,3 +8,22 @@ wheels/
 
 # Virtual environments
 .venv
+
+# IDE/editor config
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# Local staging areas
+outputs/
+assets/
+media/
+
+# Secrets and configuration
+.env
+.env.*
+*.secret*
+
+# Streamlit cache
+.streamlit/
