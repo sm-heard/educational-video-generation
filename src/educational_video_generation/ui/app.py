@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import json
 from pathlib import Path
 
 import streamlit as st
@@ -78,7 +77,8 @@ def render() -> None:
 
         if uploaded_assets:
             st.info(
-                "Uploaded assets are not yet incorporated automatically. Save them alongside the lesson spec for future iterations.",
+                "Uploaded assets are not yet incorporated automatically. "
+                "Save them alongside the lesson spec for future iterations.",
             )
             for asset in uploaded_assets:
                 st.write(f"- {asset.name} ({asset.size} bytes)")

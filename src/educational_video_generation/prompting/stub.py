@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from datetime import datetime
 import itertools
+from datetime import datetime
 from typing import Any
 
 from ..specs.models import Event, LessonSpec, NarrationChunk, SceneSpec, StyleTokens

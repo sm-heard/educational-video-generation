@@ -58,7 +58,7 @@ class SpeechSynthesizer:
             "scenes": [],
         }
 
-        for scene_index, scene in enumerate(lesson.scenes, start=1):
+        for scene in lesson.scenes:
             scene_dir = audio_root / scene.id
             scene_dir.mkdir(parents=True, exist_ok=True)
             scene_info: dict[str, Any] = {"scene_id": scene.id, "chunks": []}
@@ -77,7 +77,7 @@ class SpeechSynthesizer:
                     {
                         "index": chunk_index,
                         "text": chunk.text,
-                        "file": str(chunk_path.relative_to(output_dir)),
+                        "file": str(chunk_path.relative_to(audio_root)),
                         "duration_seconds": duration,
                         "start_seconds": time_cursor,
                     }

@@ -3,13 +3,11 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Optional
 
 import typer
+from dotenv import load_dotenv
 from rich.console import Console
 from rich.table import Table
-
-from dotenv import load_dotenv
 
 from .audio.tts import synthesize_narration
 from .config import load_defaults, load_style_tokens
@@ -17,7 +15,6 @@ from .prompting.generator import generate_lesson_spec
 from .render.renderer import export_static_frames, render_final, render_preview
 from .specs.models import LessonSpec
 from .timeline.scheduler import build_timeline
-
 
 load_dotenv()
 
@@ -125,7 +122,13 @@ def preview(
         model=speech_model,
         dry_run=True if dry_run else None,
     )
-    preview_dir = render_preview(lesson, timeline, output_dir, quality=quality)
+    preview_dir = render_preview(
+        lesson,
+        timeline,
+        output_dir,
+        quality=quality,
+        audio_manifest=manifest_path,
+    )
     console.print(f"[green]Preview artifacts at {preview_dir}")
     console.print(f"[green]Narration manifest at {manifest_path}")
 
@@ -139,13 +142,36 @@ def render(
         help="Directory for final outputs.",
     ),
     quality: str = typer.Option("high", help="Final render quality hint."),
+    voice: str = typer.Option("ballad", help="Voice preset for narration."),
+    speech_model: str = typer.Option(
+        "gpt-4o-mini-tts",
+        help="OpenAI model used for narration synthesis.",
+    ),
+    dry_run: bool = typer.Option(
+        False,
+        help="Force local silent audio generation instead of calling OpenAI.",
+    ),
 ) -> None:
-    """Produce a placeholder final render manifest."""
+    """Render all scenes at production quality and assemble the final MP4."""
 
     lesson = _load_spec(spec)
     timeline = build_timeline(lesson)
-    final_dir = render_final(lesson, timeline, output_dir, quality=quality)
-    console.print(f"[green]Final render placeholder written to {final_dir}")
+    manifest_path = synthesize_narration(
+        lesson,
+        output_dir,
+        voice=voice,
+        model=speech_model,
+        dry_run=True if dry_run else None,
+    )
+    final_dir = render_final(
+        lesson,
+        timeline,
+        output_dir,
+        quality=quality,
+        audio_manifest=manifest_path,
+    )
+    final_video = final_dir / f"{lesson.lesson_id}.mp4"
+    console.print(f"[green]Final render written to {final_video}")
 
 
 @app.command()
@@ -157,7 +183,7 @@ def frames(
         help="Directory to store frame placeholders.",
     ),
 ) -> None:
-    """Create placeholder static frames for QA."""
+    """Export static frames for quick QA checks (requires preview renders)."""
 
     lesson = _load_spec(spec)
     timeline = build_timeline(lesson)

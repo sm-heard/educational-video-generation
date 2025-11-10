@@ -28,7 +28,7 @@ target-version = "py312"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B"]
-ignore = ["E203"]
+ignore = ["E203", "B008"]
 
 [tool.ruff.lint.isort]
 known-first-party = ["educational_video_generation"]

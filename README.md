@@ -11,7 +11,7 @@ uv sync
 # Generate a lesson spec from a prompt (uses OpenAI if OPENAI_API_KEY is set)
 uv run video gen "Explain Newton's Second Law"
 
-# Produce preview artifacts (synthesises narration under outputs/<lesson>/audio)
+# Produce preview clips (synthesises narration under outputs/<lesson>/audio)
 uv run video preview outputs/physics-explain-newtons-second-law.lesson.json
 uv run video render outputs/physics-explain-newtons-second-law.lesson.json
 
@@ -19,7 +19,15 @@ uv run video render outputs/physics-explain-newtons-second-law.lesson.json
 uv run streamlit run streamlit_app.py
 ```
 
-If you want to skip API calls, append `--dry-run` to the `gen` or `preview` commands. Configuration lives in `configs/` (style tokens + defaults). Example specs are in `examples/`.
+Preview clips render to `outputs/<lesson>/preview/scene_*.mp4`; final renders land in `outputs/<lesson>/final/<lesson>.mp4`. Run `uv run video frames ...` after previewing to grab representative PNGs for QA.
+
+If you want to skip API calls, append `--dry-run` to the `gen`, `preview`, or `render` commands. Configuration lives in `configs/` (style tokens + defaults). Example specs are in `examples/`.
+
+### Prerequisites
+
+- FFmpeg available on PATH (system install or via `imageio-ffmpeg`).
+- A LaTeX distribution (e.g. MacTeX) for Manim’s text rendering.
+- Optional: `.env` file in the project root for secrets.
 
 ### Environment
 

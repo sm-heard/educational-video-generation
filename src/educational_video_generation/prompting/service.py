@@ -88,18 +88,25 @@ class PromptExpansionService:
 
 
 def _build_user_prompt(prompt: str, style: StyleTokens, defaults: dict[str, Any]) -> str:
-    return (
-        "PROMPT:\n"
-        f"{prompt}\n\n"
-        "STYLE TOKENS:\n"
-        f"{json.dumps(style.model_dump(), indent=2)}\n\n"
-        "DEFAULTS:\n"
-        f"{json.dumps(defaults, indent=2)}\n\n"
-        "REQUIREMENTS:\n"
-        "- Provide between 3 and 4 scenes covering introduction, concept, and worked example.\n"
-        "- Each scene needs narration chunks with duration estimates and corresponding visual events.\n"
-        "- Use consistent identifiers (scene_id, event_id) derived from the lesson topic.\n"
-        "- Include on-screen text, equations, or diagram notes as part of the payload for events.\n"
-        "- Ensure narration matches the pacing targets from defaults.\n"
-        "Return only JSON.""
-    )
+    instructions = [
+        "PROMPT:",
+        prompt,
+        "",
+        "STYLE TOKENS:",
+        json.dumps(style.model_dump(), indent=2),
+        "",
+        "DEFAULTS:",
+        json.dumps(defaults, indent=2),
+        "",
+        "REQUIREMENTS:",
+        "- Provide between 3 and 4 scenes covering introduction, concept, and worked example.",
+        (
+            "- Each scene needs narration chunks with duration estimates and "
+            "corresponding visual events."
+        ),
+        "- Use consistent identifiers (scene_id, event_id) derived from the lesson topic.",
+        "- Include on-screen text, equations, or diagram notes as part of the payload for events.",
+        "- Ensure narration matches the pacing targets from defaults.",
+        "Return only JSON.",
+    ]
+    return "\n".join(instructions)

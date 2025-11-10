@@ -15,12 +15,13 @@ def _ensure_src_on_path() -> None:
         sys.path.insert(0, str(src_dir))
 
 
-_ensure_src_on_path()
+def main() -> None:
+    _ensure_src_on_path()
+    load_dotenv()
+    from educational_video_generation.ui.app import render
 
-load_dotenv()
-
-from educational_video_generation.ui.app import render
+    render()
 
 
 if __name__ == "__main__":
-    render()
+    main()
