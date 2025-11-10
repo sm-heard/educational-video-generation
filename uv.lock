@@ -294,7 +294,7 @@ wheels = [
 [[package]]
 name = "educational-video-generation"
 version = "0.1.0"
-source = { virtual = "." }
+source = { editable = "." }
 dependencies = [
     { name = "imageio-ffmpeg" },
     { name = "manim" },

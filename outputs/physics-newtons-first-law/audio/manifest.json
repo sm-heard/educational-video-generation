@@ -1,0 +1,44 @@
+{
+  "voice": "ballad",
+  "scenes": [
+    {
+      "scene_id": "physics-newtons-first-law_scene1",
+      "chunks": [
+        {
+          "text": "Introduction: Placeholder narration tied to 'Explain Newton's First Law for 17-year-old physics students with an engaging example.'.",
+          "duration_seconds": 6.0
+        },
+        {
+          "text": "Additional supporting narration for visuals.",
+          "duration_seconds": 6.0
+        }
+      ]
+    },
+    {
+      "scene_id": "physics-newtons-first-law_scene2",
+      "chunks": [
+        {
+          "text": "Concept Walkthrough: Placeholder narration tied to 'Explain Newton's First Law for 17-year-old physics students with an engaging example.'.",
+          "duration_seconds": 6.0
+        },
+        {
+          "text": "Additional supporting narration for visuals.",
+          "duration_seconds": 6.0
+        }
+      ]
+    },
+    {
+      "scene_id": "physics-newtons-first-law_scene3",
+      "chunks": [
+        {
+          "text": "Worked Example: Placeholder narration tied to 'Explain Newton's First Law for 17-year-old physics students with an engaging example.'.",
+          "duration_seconds": 6.0
+        },
+        {
+          "text": "Additional supporting narration for visuals.",
+          "duration_seconds": 6.0
+        }
+      ]
+    }
+  ]
+}
