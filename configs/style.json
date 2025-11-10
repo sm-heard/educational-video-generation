@@ -1,0 +1,19 @@
+{
+  "name": "default",
+  "fonts": {
+    "title": {"family": "Inter", "size": 40},
+    "heading": {"family": "Inter", "size": 32},
+    "body": {"family": "Inter", "size": 24},
+    "caption": {"family": "Inter", "size": 20}
+  },
+  "colors": {
+    "background": "#0B0F19",
+    "text": "#F6F8FF",
+    "accent_primary": "#3498DB",
+    "accent_secondary": "#E74C3C",
+    "highlight": "#F1C40F",
+    "neutral": "#95A5A6"
+  },
+  "transitions": {"duration_ms": 300, "easing": "ease_in_out"},
+  "layout": {"title_y": 3.2, "formula_x": 5.2, "safe_margin": 0.3}
+}

@@ -1,0 +1,13 @@
+# Global defaults for the educational video pipeline
+fps: 30
+resolution:
+  width: 1920
+  height: 1080
+preview:
+  quality: low
+  fps: 12
+default_scene_duration: 30.0
+default_chunk_duration: 6.0
+event_spacing: 3.0
+voice: ballad
+lesson_id_prefix: physics

@@ -1,0 +1,127 @@
+{
+  "lesson_id": "physics-newtons-first-law",
+  "topic": "Newton's First Law",
+  "prompt": "Explain Newton's First Law for 17-year-old physics students with an engaging example.",
+  "target_audience": "17-year-old physics students",
+  "style": {
+    "name": "default"
+  },
+  "metadata": {
+    "generated_at": "2024-01-01T00:00:00Z",
+    "source_prompt": "Explain Newton's First Law for 17-year-old physics students with an engaging example.",
+    "assets": []
+  },
+  "scenes": [
+    {
+      "id": "physics-newtons-first-law_scene1",
+      "title": "Introduction",
+      "summary": "Hook the learner and preview the key questions we will answer.",
+      "duration_target": 30.0,
+      "narration": [
+        {
+          "text": "Introduction: Placeholder narration tied to 'Explain Newton's First Law for 17-year-old physics students with an engaging example.'.",
+          "duration_seconds": 6.0
+        },
+        {
+          "text": "Additional supporting narration for visuals.",
+          "duration_seconds": 6.0
+        }
+      ],
+      "events": [
+        {
+          "id": "physics-newtons-first-law_scene1_event0",
+          "at_seconds": 0.0,
+          "type": "show_text",
+          "payload": {
+            "text": "Introduction: Placeholder narration tied to 'Explain Newton's First Law for 17-year-old physics students with an engaging example.'.",
+            "style": "title"
+          }
+        },
+        {
+          "id": "physics-newtons-first-law_scene1_event1",
+          "at_seconds": 3.0,
+          "type": "highlight",
+          "payload": {
+            "text": "Additional supporting narration for visuals.",
+            "style": "body"
+          }
+        }
+      ],
+      "preview_only": false
+    },
+    {
+      "id": "physics-newtons-first-law_scene2",
+      "title": "Concept Walkthrough",
+      "summary": "Explain the core idea with supporting visuals and definitions.",
+      "duration_target": 30.0,
+      "narration": [
+        {
+          "text": "Concept Walkthrough: Placeholder narration tied to 'Explain Newton's First Law for 17-year-old physics students with an engaging example.'.",
+          "duration_seconds": 6.0
+        },
+        {
+          "text": "Additional supporting narration for visuals.",
+          "duration_seconds": 6.0
+        }
+      ],
+      "events": [
+        {
+          "id": "physics-newtons-first-law_scene2_event0",
+          "at_seconds": 0.0,
+          "type": "show_text",
+          "payload": {
+            "text": "Concept Walkthrough: Placeholder narration tied to 'Explain Newton's First Law for 17-year-old physics students with an engaging example.'.",
+            "style": "title"
+          }
+        },
+        {
+          "id": "physics-newtons-first-law_scene2_event1",
+          "at_seconds": 3.0,
+          "type": "highlight",
+          "payload": {
+            "text": "Additional supporting narration for visuals.",
+            "style": "body"
+          }
+        }
+      ],
+      "preview_only": false
+    },
+    {
+      "id": "physics-newtons-first-law_scene3",
+      "title": "Worked Example",
+      "summary": "Apply the idea to a concrete physics problem with step-by-step narration.",
+      "duration_target": 30.0,
+      "narration": [
+        {
+          "text": "Worked Example: Placeholder narration tied to 'Explain Newton's First Law for 17-year-old physics students with an engaging example.'.",
+          "duration_seconds": 6.0
+        },
+        {
+          "text": "Additional supporting narration for visuals.",
+          "duration_seconds": 6.0
+        }
+      ],
+      "events": [
+        {
+          "id": "physics-newtons-first-law_scene3_event0",
+          "at_seconds": 0.0,
+          "type": "show_text",
+          "payload": {
+            "text": "Worked Example: Placeholder narration tied to 'Explain Newton's First Law for 17-year-old physics students with an engaging example.'.",
+            "style": "title"
+          }
+        },
+        {
+          "id": "physics-newtons-first-law_scene3_event1",
+          "at_seconds": 3.0,
+          "type": "highlight",
+          "payload": {
+            "text": "Additional supporting narration for visuals.",
+            "style": "body"
+          }
+        }
+      ],
+      "preview_only": false
+    }
+  ]
+}
