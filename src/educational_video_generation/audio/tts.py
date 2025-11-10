@@ -108,7 +108,7 @@ class SpeechSynthesizer:
             model=self.config.model,
             voice=self.config.voice,
             input=text,
-            format=self.config.format,
+            audio_format=self.config.format,
         ) as response:
             response.stream_to_file(output_path)
 
