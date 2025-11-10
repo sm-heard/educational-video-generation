@@ -134,6 +134,114 @@ def preview(
 
 
 @app.command()
+def run(
+    prompt: str = typer.Argument(..., help="Single prompt describing the lesson."),
+    style: Path = typer.Option(
+        DEFAULT_STYLE_PATH,
+        exists=True,
+        file_okay=True,
+        dir_okay=False,
+        help="Path to the style tokens JSON file.",
+    ),
+    defaults: Path = typer.Option(
+        DEFAULT_DEFAULTS_PATH,
+        exists=False,
+        help="Optional defaults YAML overriding duration, pacing, etc.",
+    ),
+    output_dir: Path = typer.Option(
+        DEFAULT_OUTPUT_DIR,
+        file_okay=False,
+        help="Directory for generated artifacts.",
+    ),
+    prompt_model: str = typer.Option(
+        "gpt-4o-mini",
+        help="OpenAI model used for prompt expansion.",
+    ),
+    preview_quality: str = typer.Option(
+        "low",
+        help="Preview quality hint (low|medium|high).",
+    ),
+    final_quality: str = typer.Option(
+        "high",
+        help="Final render quality hint (medium|high).",
+    ),
+    voice: str = typer.Option("ballad", help="Voice preset for narration."),
+    speech_model: str = typer.Option(
+        "gpt-4o-mini-tts",
+        help="OpenAI model used for narration synthesis.",
+    ),
+    dry_run: bool = typer.Option(
+        False,
+        help="Force stub generation and silent audio instead of calling OpenAI.",
+    ),
+    skip_preview: bool = typer.Option(
+        False,
+        help="Skip preview renders (not recommended).",
+        is_flag=True,
+    ),
+    skip_frames: bool = typer.Option(
+        False,
+        help="Skip exporting static QA frames.",
+        is_flag=True,
+    ),
+) -> None:
+    """Run the full pipeline: prompt expansion → audio → preview → final render."""
+
+    output_dir.mkdir(parents=True, exist_ok=True)
+    style_tokens = load_style_tokens(style)
+    defaults_payload = load_defaults(defaults)
+
+    lesson = generate_lesson_spec(
+        prompt,
+        style_tokens,
+        defaults_payload,
+        model=prompt_model,
+        dry_run=True if dry_run else None,
+    )
+    spec_path = output_dir / f"{lesson.lesson_id}.lesson.json"
+    spec_path.write_text(lesson.model_dump_json(indent=2), encoding="utf-8")
+
+    console.print(f"[green]Saved lesson spec to {spec_path}")
+    _display_spec(lesson)
+
+    timeline = build_timeline(lesson)
+
+    manifest_path = synthesize_narration(
+        lesson,
+        output_dir,
+        voice=voice,
+        model=speech_model,
+        dry_run=True if dry_run else None,
+    )
+    console.print(f"[green]Narration manifest at {manifest_path}")
+
+    preview_dir = None
+    if not skip_preview:
+        preview_dir = render_preview(
+            lesson,
+            timeline,
+            output_dir,
+            quality=preview_quality,
+            audio_manifest=manifest_path,
+        )
+        console.print(f"[green]Preview clips written to {preview_dir}")
+
+    final_dir = render_final(
+        lesson,
+        timeline,
+        output_dir,
+        quality=final_quality,
+        audio_manifest=manifest_path,
+    )
+    final_video = final_dir / f"{lesson.lesson_id}.mp4"
+    console.print(f"[green]Final render written to {final_video}")
+
+    if not skip_frames:
+        frames_dir = export_static_frames(lesson, timeline, output_dir)
+        console.print(f"[green]QA frames available in {frames_dir}")
+
+
+@app.command()
 def render(
     spec: Path = typer.Argument(..., exists=True, help="Lesson spec to render."),
     output_dir: Path = typer.Option(

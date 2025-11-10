@@ -8,6 +8,9 @@ Prototype tooling for turning a single prompt into a structured physics lesson t
 # Ensure dependencies are installed
 uv sync
 
+# Generate an end-to-end video (spec → audio → preview → final)
+uv run video run "Explain Newton's First Law"
+
 # Generate a lesson spec from a prompt (uses OpenAI if OPENAI_API_KEY is set)
 uv run video gen "Explain Newton's Second Law"
 

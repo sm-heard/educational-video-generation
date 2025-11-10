@@ -1,7 +1,7 @@
 {
   "lesson_id": "physics-explain-newtons-first-law",
   "topic": "Explain Newton'S First Law",
-  "prompt": "Explain Newton's First Law",
+  "prompt": "Explain Newton's first law",
   "target_audience": "17-year-old physics students",
   "style": {
     "name": "default",
@@ -49,7 +49,7 @@
       "duration_target": 30.0,
       "narration": [
         {
-          "text": "Introduction: Placeholder narration tied to 'Explain Newton's First Law'.",
+          "text": "Introduction: Placeholder narration tied to 'Explain Newton's first law'.",
           "duration_seconds": 6.0,
           "start_seconds": null,
           "metadata": {}
@@ -67,7 +67,7 @@
           "at_seconds": 0.0,
           "type": "show_text",
           "payload": {
-            "text": "Introduction: Placeholder narration tied to 'Explain Newton's First Law'.",
+            "text": "Introduction: Placeholder narration tied to 'Explain Newton's first law'.",
             "style": "title"
           }
         },
@@ -90,7 +90,7 @@
       "duration_target": 30.0,
       "narration": [
         {
-          "text": "Concept Walkthrough: Placeholder narration tied to 'Explain Newton's First Law'.",
+          "text": "Concept Walkthrough: Placeholder narration tied to 'Explain Newton's first law'.",
           "duration_seconds": 6.0,
           "start_seconds": null,
           "metadata": {}
@@ -108,7 +108,7 @@
           "at_seconds": 0.0,
           "type": "show_text",
           "payload": {
-            "text": "Concept Walkthrough: Placeholder narration tied to 'Explain Newton's First Law'.",
+            "text": "Concept Walkthrough: Placeholder narration tied to 'Explain Newton's first law'.",
             "style": "title"
           }
         },
@@ -131,7 +131,7 @@
       "duration_target": 30.0,
       "narration": [
         {
-          "text": "Worked Example: Placeholder narration tied to 'Explain Newton's First Law'.",
+          "text": "Worked Example: Placeholder narration tied to 'Explain Newton's first law'.",
           "duration_seconds": 6.0,
           "start_seconds": null,
           "metadata": {}
@@ -149,7 +149,7 @@
           "at_seconds": 0.0,
           "type": "show_text",
           "payload": {
-            "text": "Worked Example: Placeholder narration tied to 'Explain Newton's First Law'.",
+            "text": "Worked Example: Placeholder narration tied to 'Explain Newton's first law'.",
             "style": "title"
           }
         },
@@ -167,8 +167,8 @@
     }
   ],
   "metadata": {
-    "generated_at": "2025-11-10T03:50:43.365182Z",
-    "source_prompt": "Explain Newton's First Law",
+    "generated_at": "2025-11-10T04:10:12.758209Z",
+    "source_prompt": "Explain Newton's first law",
     "assets": []
   }
 }
