@@ -42,3 +42,12 @@ OPENAI_TTS_VOICE=ballad  # optional override
 ```
 
 On Streamlit Community Cloud, add the same keys via Settings → Secrets. For GitHub Actions or other runners, configure them as repository secrets and expose them as environment variables.
+
+### Deployment Notes
+
+Manim requires native libraries (`manimpango`, Pango, Cairo, ffmpeg, clang/pkg-config). Streamlit Community Cloud cannot install them, so the hosted build fails. To deploy:
+
+- Use a platform where you control the system packages (Docker on Render/Fly/Heroku/etc.) and install the build dependencies before running `uv sync`.
+- Or host Streamlit separately and forward prompts to a render worker (e.g., FastAPI on Render or a GitHub Action) that has those dependencies available.
+
+For local development, follow the Quick Start commands above—everything runs inside the uv-managed virtual environment.

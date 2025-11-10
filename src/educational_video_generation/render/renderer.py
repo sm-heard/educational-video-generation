@@ -21,6 +21,8 @@ from manim import (
     tempconfig,
 )
 from moviepy import concatenate_videoclips
+from moviepy.audio.AudioClip import CompositeAudioClip
+from moviepy.audio.io.AudioFileClip import AudioFileClip
 from moviepy.video.io.VideoFileClip import VideoFileClip
 
 from ..specs.models import LessonSpec, SceneSpec, StyleTokens, Timeline
@@ -158,7 +160,7 @@ def _render_scene_to_file(
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path = output_path.resolve()
 
-    scene_class = _build_scene_class(scene_spec, style, audio_chunks)
+    scene_class = _build_scene_class(scene_spec, style)
 
     with tempconfig(
         {
@@ -180,11 +182,13 @@ def _render_scene_to_file(
             output_path.unlink(missing_ok=True)
             movie_path.rename(output_path)
 
+    if audio_chunks:
+        _apply_audio_track(output_path, audio_chunks)
+
 
 def _build_scene_class(
     scene_spec: SceneSpec,
     style: StyleTokens,
-    audio_chunks: list[dict[str, Any]],
 ):
     fonts = style.fonts or {}
     colors = style.colors or {}
@@ -201,12 +205,6 @@ def _build_scene_class(
     class GeneratedScene(Scene):  # type: ignore[misc]
         def construct(self) -> None:  # noqa: D401 - internal helper
             self.camera.background_color = background_color
-
-            for chunk in audio_chunks:
-                file_path = chunk.get("abs_path") or chunk.get("file")
-                if file_path:
-                    offset = float(chunk.get("start_seconds", 0.0))
-                    self.add_sound(str(file_path), time_offset=offset)
 
             title = Text(
                 scene_spec.title,
@@ -293,6 +291,43 @@ def _load_audio_manifest(path: Path | None) -> dict[str, list[dict[str, Any]]]:
             })
         result[scene_id] = entries
     return result
+
+
+def _apply_audio_track(output_path: Path, audio_chunks: list[dict[str, Any]]) -> None:
+    clips = []
+    for chunk in audio_chunks:
+        abs_path = chunk.get("abs_path")
+        if not abs_path or not Path(abs_path).exists():
+            continue
+        clip = AudioFileClip(str(abs_path))
+        start = float(chunk.get("start_seconds", 0.0))
+        if start:
+            clip = clip.with_start(start)
+        clips.append(clip)
+
+    if not clips:
+        return
+
+    audio = CompositeAudioClip(clips)
+    video = VideoFileClip(str(output_path))
+    video = video.with_audio(audio)
+
+    temp_path = output_path.with_suffix(".tmp.mp4")
+    video.write_videofile(
+        str(temp_path),
+        codec="libx264",
+        audio_codec="aac",
+        fps=video.fps,
+        temp_audiofile=str(temp_path.with_suffix(".temp-audio.m4a")),
+        remove_temp=True,
+        logger=None,
+    )
+    temp_path.replace(output_path)
+
+    video.close()
+    audio.close()
+    for clip in clips:
+        clip.close()
 
 
 def _concatenate_videos(scene_paths: list[Path], output_path: Path) -> None:
